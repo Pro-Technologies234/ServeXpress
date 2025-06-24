@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ServeXpress</title>
+        <link rel="stylesheet" href="/static/css/output.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <link rel="icon" href="/static/icons/favicon.png">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+</head>
+<body class="dark:bg-zinc-950 bg-white transition-colors font-exo2 h-screen " >
+    {% include "partials/message_dialog.html" %}
+    <div class="grid w-full md:grid-cols-12 " >
+        {% comment %} {% if request.user.role == "client"  %}
+            {% include "core/partials/client_sidebar.html" %}
+        {% elif request.user.role == "freelancer"  %}
+            {% include "core/partials/freelancer_sidebar.html" %}
+        {% else %}
+            {% include "admin_app/partials/admin_sidebar.html" %}
+        {% endif %} {% endcomment %}
+        <div class="max-w-screen md:max-w-full  w-full  h-screen max-h-screen md:col-span-10" >
+            {% include "shared/navbar.html" %}
+            {% block content %}
+            
+            {% endblock  %}
+        </div>
+    </div>
+    <script>
+        const toggle = document.getElementById('dark-mode-toggle');
+        toggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        // On load, set theme from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        }
+    </script> 
+    <script src="/static/javascript/core.js" >
+
+    </script>
+
+</body>
+</html>

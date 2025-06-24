@@ -1,0 +1,137 @@
+{% load class_filter %}
+<section>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    @keyframes scaleOut {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0.9); opacity: 0; }
+    }
+    .animate-fade-in { animation: fadeIn 0.1s ease forwards; }
+    .animate-fade-out { animation: fadeOut 0.1s ease forwards; }
+    .animate-scale-in { animation: scaleIn 0.1s ease forwards; }
+    .animate-scale-out { animation: scaleOut 0.1s ease forwards; }
+  </style>
+
+  <div onclick="closeProposalDialog()" class=" hidden proposalDialogOverlay bg-black/80 backdrop-blur-xs w-full fixed h-lvh z-100"></div>
+  <div class=" hidden proposalDialog z-100 ">
+    <form method="post" class="proposalDialogContent w-[90%] md:w-3xl overflow-y-auto h-130 z-100 flex flex-col md:grid grid-rows-12 p-4 md:p-8 shadow-zinc-200-800  dark:shadow-black m-auto  gap-8 rounded-xl shadow-2xl bg-white dark:bg-zinc-950 fixed top-0 left-0 right-0 bottom-0 dark:text-white">
+      {% csrf_token %}
+        <button onclick="closeProposalDialog()" class="cursor-pointer group top-2 z-2 right-2 absolute p-1  text-black ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        <div class="flex justify-center w-full items-center gap-4" >
+            <div class="rounded-full overflow-hidden w-12  h-12 " >
+                  {% if not selected_job.client.profile_picture %}
+                        {% if selected_job.client.gender == "male" %}
+                            <img src="/static/images/default_profile.png" alt="" class="object-cover w-full h-full" >
+                        {% elif selected_job.client.gender == "female" %}
+                            <img src="/static/images/default_profile_pic.png" alt="" class="object-cover w-full h-full" >
+                        {% endif %}
+                    {% else %}
+                        <img src="{{selected_job.client.profile_picture.url}}" alt="" class="object-cover w-full h-full" >
+                    {% endif %}
+              </div>
+              <h2>{{selected_job.title}}</h2>
+        </div>
+        <div class="row-span-2 flex flex-col items-center" >
+            <span class="text-center text-xl md:text-2xl font-bold" >Apply with your ServeXpress Profile</span>
+            <p class="text-xs text-center" >Your application will be submitted along with a preview of your ServeXpress Profile and most recent projects.</p>
+        </div>
+        <div class="flex flex-col  md:grid  md:grid-cols-2 gap-4 h-full row-span-10" >
+            <div  class="flex flex-col w-full h-full items-center border border-zinc-400 p-4 rounded-md">
+                <div class="w-full flex flex-col items-center" >                    
+                    <div class="rounded-full overflow-hidden w-32  h-32 " >
+                      {% if not user.profile_picture %}
+                            {% if user.gender == "male" %}
+                                <img src="/static/images/default_profile.png" alt="" class="object-cover w-full h-full" >
+                            {% elif user.gender == "female" %}
+                                <img src="/static/images/default_profile_pic.png" alt="" class="object-cover w-full h-full" >
+                            {% endif %}
+                        {% else %}
+                            <img src="{{user.profile_picture.url}}" alt="" class="object-cover w-full h-full" >
+                        {% endif %}
+                    </div>
+                    <span class="text-2xl font-bold text-center" >{{user.username}}</span>
+                </div>
+                <div class="grid grid-cols-3 mt-5 gap-2 w-full h-full" >
+                    <div class="bg-zinc-100 flex flex-col items-center justify-center p-2 rounded-md " >
+                        <span class="text-4xl font-medium" >0</span>
+                        <span class="text-xs" >Applications</span>
+                    </div>
+                    <div class="bg-zinc-100 flex flex-col items-center justify-center p-2 rounded-md " >
+                        <span class="text-4xl font-medium" >0</span>
+                        <span class="text-xs" >Followers</span>
+                    </div>
+                    <div class="bg-zinc-100 flex flex-col items-center justify-center p-2 rounded-md " >
+                        <span class="text-4xl font-medium" >0</span>
+                        <span class="text-xs" >Project views</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2 pb-0.5" >
+                <label for="" class="text-sm  font-medium" >Proposal Details</label>
+                {{job_application_form.message.label_tag}}
+                {{job_application_form.message|add_class:"small-input resize-none"}}
+                {{job_application_form.bid_amount.label_tag}}
+                {{job_application_form.bid_amount|add_class:"small-input"}}
+            </div>
+            <button type="submit" class="action-btn inline md:hidden" >
+                Submit your Proposal
+            </button>
+        </div>
+        <div class="mb-5 " >
+            <button onclick="showGlobalLoading()" type="submit" class="action-btn md:inline hidden " >
+                Submit your Proposal
+            </button>
+        </div>
+  </form>
+</section>
+
+<script>
+    const proposalOverlay = document.querySelector(".proposalDialogOverlay");
+    const proposalDialog = document.querySelector(".proposalDialog");
+    const proposalContent = document.querySelector(".proposalDialogContent");
+    const proposalUserBtn = document.getElementById("proposalUserbtn");
+
+  function closeProposalDialog() {
+    // Animate both separately
+    proposalOverlay.classList.remove("animate-fade-in");
+    proposalOverlay.classList.add("animate-fade-out");
+
+    proposalContent.classList.remove("animate-scale-in");
+    proposalContent.classList.add("animate-scale-out");
+
+    setTimeout(() => {
+      proposalOverlay.style.display = "none";
+      proposalOverlay.classList.remove("animate-fade-out");
+
+      proposalDialog.style.display = "none";
+      proposalContent.classList.remove("animate-scale-out");
+    }, 100);
+  }
+
+  function openProposalDialog() {
+
+    // Show and animate both separately
+    proposalOverlay.style.display = "block";
+    proposalOverlay.classList.remove("animate-fade-out");
+    proposalOverlay.classList.add("animate-fade-in");
+
+
+    proposalDialog.style.display = "block";
+    proposalContent.classList.remove("animate-scale-out");
+    proposalContent.classList.add("animate-scale-in");
+  }
+
+</script>

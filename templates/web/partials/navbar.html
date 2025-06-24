@@ -1,0 +1,31 @@
+<header class="w-full flex justify-between md:justify-center items-center  text-sm py-5 px-4 md:px-10 md:pl-20" >
+    <a href="" class="flex flex-col  text-sm font-semibold dark:text-white text-black items-start" >
+        <img src="/static/icons/favicon.png" alt="" class="w-10 md:scale-300 scale-200"  >
+    </a>
+    <nav class=" bg-white/10 backdrop-blur-sm m-auto rounded-full   shadow-lg  hidden md:flex gap-10 items-center px-8 py-2.5 " >
+        <a href="/" class="{% if request.resolver_match.url_name == 'home' %}text-white{% else %}text-neutral-400{% endif %}cursor-pointer transition-colors hover:text-lime-400">
+            Platform
+        </a>
+        <a href="#about" class="{% if request.resolver_match.url_name == "" %} text-white {%else%} text-neutral-400 {%endif%}cursor-pointer transition-colors hover:text-lime-400" >
+            Solution
+        </a>
+        <a href="" class="{% if request.resolver_match.url_name == "" %} text-white {%else%} text-neutral-400 {%endif%}cursor-pointer transition-colors hover:text-lime-400" >
+            Resources
+        </a>
+        <a href="" class="{% if request.resolver_match.url_name == "" %} text-white {%else%} text-neutral-400 {%endif%}cursor-pointer transition-colors hover:text-lime-400" >
+            Company
+        </a>
+    </nav>
+    <div class="flex gap-4" >  
+        <a href= {% url "log_in" %} >
+            <button class="cursor-pointer bg-white  text-black  hover:-translate-y-1 transition-transform ease-out duration-500 px-4 p-1.5 rounded-full" >
+                Sign in
+            </button>
+        </a>
+        <a href={% url "register" %} class=" text-sm " >
+            <button class="group bg-chartreuse rounded-full cursor-pointer px-4 py-1.5 flex gap-1 text-black items-center hover:shadow-xl/50 shadow-chartreuse duration-500 transition-all hover:-translate-y-1 hover:rotate-1 ">
+                Create an Account
+            </button>
+        </a>
+    </div>
+</header>

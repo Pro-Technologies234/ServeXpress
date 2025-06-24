@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ServeXpress</title>
+        <link rel="stylesheet" href="/static/css/output.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <link rel="icon" href="/static/icons/favicon.png">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+        <script>
+            // On load, set theme from localStorage
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+            }
+        </script>
+</head>
+<body class="dark:bg-zinc-950 bg-white transition-colors font-exo2 h-screen " >
+    <div id="globalLoader" class="hidden justify-center items-center fixed inset-0 bg-white/40 dark:bg-black/40 backdrop-blur-xs z-100" >
+        <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-chartreuse animate-spin lucide lucide-loader-circle-icon lucide-loader-circle"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+    </div>
+    {% include "partials/message_dialog.html" %}
+    <!-- Message Dialog -->
+     {% if request.resolver_match.url_name == "my_jobs" %}
+        {% include "shared/dialogs/post_job.html" %}
+    {% endif %}
+    {% include "shared/dialogs/job_details.html" %}
+    
+    {% if request.resolver_match.url_name == "find_jobs" %}
+        {% include "shared/dialogs/proposal.html" %}
+    {% endif %}
+    {% if request.resolver_match.url_name == "proposals" %}
+        {% include "shared/dialogs/proposal_details.html" %}
+    {% endif %}
+    <div class="grid w-full md:grid-cols-12 " >
+        {% if request.user.role == "client"  %}
+            {% include "core/partials/client_sidebar.html" %}
+        {% elif request.user.role == "freelancer"  %}
+            {% include "core/partials/freelancer_sidebar.html" %}
+        {% else %}
+            {% include "admin_app/partials/admin_sidebar.html" %}
+
+        {% endif %}
+        <div class="max-w-screen md:max-w-full  w-full  h-screen max-h-screen md:col-span-10" >
+            {% include "shared/navbar.html" %}
+            {% block content %}
+            
+            {% endblock  %}
+        </div>
+    </div>
+    <script>
+        const toggle = document.getElementById('dark-mode-toggle');
+        toggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script> 
+    <script src="/static/javascript/core.js" >
+
+    </script>
+
+</body>
+</html>

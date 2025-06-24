@@ -1,0 +1,100 @@
+{% load class_filter %}
+<section>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    @keyframes scaleOut {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0.9); opacity: 0; }
+    }
+    .animate-fade-in { animation: fadeIn 0.1s ease forwards; }
+    .animate-fade-out { animation: fadeOut 0.1s ease forwards; }
+    .animate-scale-in { animation: scaleIn 0.1s ease forwards; }
+    .animate-scale-out { animation: scaleOut 0.1s ease forwards; }
+  </style>
+
+  <div onclick="closeProposalDetailsDialog()" class=" hidden proposalDetailsDialogOverlay bg-black/80 backdrop-blur-xs w-full fixed h-lvh z-100"></div>
+  <div class=" hidden proposalDetailsDialog z-100 ">
+    <div class="proposalDetailsDialogContent w-[90%] md:w-3xl overflow-y-auto h-130 z-100 flex flex-col p-4 md:p-8 shadow-zinc-200-800  dark:shadow-black m-auto  gap-4 rounded-xl shadow-2xl bg-white dark:bg-zinc-950 fixed top-0 left-0 right-0 bottom-0 dark:text-white">
+        <div class="flex gap-5 " >
+            <div class="rounded-lg overflow-hidden border-zinc-300 dark:border-zinc-700 w-35  h-35" >
+                    {% if not current_proposal.freelancer.profile_picture %}
+                        {% if current_proposal.freelancer.gender == "male" %}
+                            <img src="/static/images/default_profile.png" alt="" class="object-cover w-full h-full" >
+                        {% elif current_proposal.freelancer.gender == "female" %}
+                            <img src="/static/images/default_profile_pic.png" alt="" class="object-cover w-full h-full" >
+                        {% endif %}
+                    {% else %}
+                        <img src="{{current_proposal.freelancer.profile_picture.url}}" alt="" class="object-cover w-full h-full" >
+                    {% endif %}
+            </div>
+            <div class="flex flex-col" >
+                <span class="text-4xl font-medium capitalize " >{{current_proposal.freelancer.username}}</span>
+                <span class="text-sm font-medium capitalize " >{{current_proposal.freelancer.role}}</span>
+            </div>
+        </div>
+        <div>
+            <p class="text-sm text-zinc-800 font-medium" >{{current_proposal.message|linebreaksbr}}</p>
+        </div>
+        <div>
+            <a href=" {% if current_proposal %}{% url "accept_proposal" current_proposal.id %}{% endif %}">
+                <button class="action-btn" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+                    Accept this proposal
+                </button>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+    const proposalDetailsOverlay = document.querySelector(".proposalDetailsDialogOverlay");
+    const proposalDetailsDialog = document.querySelector(".proposalDetailsDialog");
+    const proposalDetailsContent = document.querySelector(".proposalDetailsDialogContent");
+    const proposalDetailsUserBtn = document.getElementById("proposalDetailsUserbtn");
+
+  function closeProposalDetailsDialog() {
+    // Animate both separately
+    proposalDetailsOverlay.classList.remove("animate-fade-in");
+    proposalDetailsOverlay.classList.add("animate-fade-out");
+
+    proposalDetailsContent.classList.remove("animate-scale-in");
+    proposalDetailsContent.classList.add("animate-scale-out");
+
+    setTimeout(() => {
+      proposalDetailsOverlay.style.display = "none";
+      proposalDetailsOverlay.classList.remove("animate-fade-out");
+
+      proposalDetailsDialog.style.display = "none";
+      proposalDetailsContent.classList.remove("animate-scale-out");
+    }, 100);
+  }
+
+  {% if selected_proposal_id %}
+    openProposalDetailsDialog()
+  {% endif %}
+
+  function openProposalDetailsDialog() {
+
+    // Show and animate both separately
+    proposalDetailsOverlay.style.display = "block";
+    proposalDetailsOverlay.classList.remove("animate-fade-out");
+    proposalDetailsOverlay.classList.add("animate-fade-in");
+
+
+    proposalDetailsDialog.style.display = "block";
+    proposalDetailsContent.classList.remove("animate-scale-out");
+    proposalDetailsContent.classList.add("animate-scale-in");
+  }
+
+</script>

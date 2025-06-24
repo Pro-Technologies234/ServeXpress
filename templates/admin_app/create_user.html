@@ -1,0 +1,75 @@
+{% extends "admin_app/base.html" %}
+
+{% block content %}
+<div class="p-5 dark:text-white text-black ">
+    <h1 class="font-semibold text-2xl" >Create a User</h1>
+    <form method="post" novalidate class="w-full h-full" >
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <div class="mt-5 grid grid-rows-2 md:grid-cols-2 gap-5" >
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.email.label_tag }}
+                </span>
+                {{ form.email }}
+            </div>
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.username.label_tag }}
+                </span>
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="mt-5 grid grid-rows-2 md:grid-cols-2 gap-5" >
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.first_name.label_tag }}
+                </span>
+                {{ form.first_name }}
+            </div>
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.last_name.label_tag }}
+                </span>
+                {{ form.last_name }}
+            </div>
+        </div>
+        <div class="mt-5 grid grid-rows-2 md:grid-cols-2 gap-5" >
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.gender.label_tag }}
+                </span>
+                {{ form.gender }}
+            </div>
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.role.label_tag }}
+                </span>
+                {{ form.role }}
+            </div>
+        </div>
+        <div class="mt-5 grid grid-rows-2 md:grid-cols-2 gap-5" >
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.password.label_tag }}
+                </span>
+                {{ form.password }}
+            </div>
+            <div class="dark:text-black" >
+                <span class="dark:text-white" >
+                    {{ form.confirm_password.label_tag }}
+                </span>
+                {{ form.confirm_password }}
+            </div>
+        </div>
+        <button type="submit" class="mt-10 bg-black dark:bg-chartreuse dark:text-black text-chartreuse hover:bg-stone-900 cursor-pointer rounded-xl px-6 py-3 flex gap-2"  >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-plus-icon lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            Create
+        </button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+
+<section>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    @keyframes scaleOut {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0.9); opacity: 0; }
+    }
+    .animate-fade-in { animation: fadeIn 0.1s ease forwards; }
+    .animate-fade-out { animation: fadeOut 0.1s ease forwards; }
+    .animate-scale-in { animation: scaleIn 0.1s ease forwards; }
+    .animate-scale-out { animation: scaleOut 0.1s ease forwards; }
+  </style>
+
+  <div onclick="closeCategoryDialog()" class=" categoryDialogOverlay bg-[#1113] w-full fixed h-lvh z-100"></div>
+  <div class="categoryDialog  ">
+        <div class="categoryDialogContent w-[90%] md:w-md  to-black h-100 z-100  pr-2 p-5 shadow-gray-800 m-auto   rounded-2xl shadow-2xl bg-white fixed top-0 left-0 right-0 bottom-0">
+          <div class="flex flex-col gap-2 overflow-y-auto scroll-bar h-full w-full" >
+            {% for category in categories %}
+                {% if not category.parent_category %}
+                    <div class="w-full rounded-lg bg-zinc-100 border border-zinc-200 p-2" >
+                        <span class="font-semibold" >
+                            {{category}}
+                        </span>
+                        <div class="bg-white w-full rounded-lg p-2 border border-zinc-200" >
+                            <div class="mb-2 flex flex-col" > 
+                                {% for sub_category in category.sub_categories.all %}                            
+                                    <span class=" {% if not forloop.first %} border-t {% endif %} text-sm border-zinc-200 py-1 w-full" >
+                                        {{sub_category}}
+                                    </span>
+                                {% endfor %}
+                            </div>
+                            <button class="cursor-pointer text-xs bg-lime-200 hover:bg-lime-300 transition-colors text-black p-2 rounded-md" >
+                                Add sub category
+                            </button>
+                            <input type="text" name="" id="" class="input-field" >
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="w-full bg-zinc-100 hidden" >
+                <input type="text" class="p-1 px-2 text-xs rounded-md focus:outline-chartreuse outline-1 outline-zinc-400 focus:border-none" >
+            </div>
+            <button class="cursor-pointer text-xs bg-black text-chartreuse p-2 rounded-md mt-2" >
+                Add category
+            </button>
+          </div>
+        </div>
+  </div>
+</section>
+
+<script>
+    const categoryOverlay = document.querySelector(".categoryDialogOverlay");
+    const categoryDialog = document.querySelector(".categoryDialog");
+    const categoryContent = document.querySelector(".categoryDialogContent");
+    const categoryUserBtn = document.getElementById("categoryUserbtn");
+
+  function closeCategoryDialog() {
+    // Animate both separately
+    categoryOverlay.classList.remove("animate-fade-in");
+    categoryOverlay.classList.add("animate-fade-out");
+
+    categoryContent.classList.remove("animate-scale-in");
+    categoryContent.classList.add("animate-scale-out");
+
+    setTimeout(() => {
+      categoryOverlay.style.display = "none";
+      categoryOverlay.classList.remove("animate-fade-out");
+
+      categoryDialog.style.display = "none";
+      categoryContent.classList.remove("animate-scale-out");
+    }, 100);
+  }
+
+  function openCategoryDialog(id) {
+
+    // Show and animate both separately
+    categoryOverlay.style.display = "block";
+    categoryOverlay.classList.remove("animate-fade-out");
+    categoryOverlay.classList.add("animate-fade-in");
+
+    // Set the correct Django URL for deletion
+    categoryUserBtn.action = `/manage_user/users/${id}/category/`;
+
+    categoryDialog.style.display = "block";
+    categoryContent.classList.remove("animate-scale-out");
+    categoryContent.classList.add("animate-scale-in");
+  }
+
+</script>

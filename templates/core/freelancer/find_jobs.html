@@ -1,0 +1,153 @@
+{% extends "core/base.html" %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+<div  id="find_job_scroll" class=" h-[90%] overflow-y-auto" >
+    <div class="w-full relative overflow-hidden h-50 text-white" >
+        <video src="{% static "videos/Flame.mp4" %}" autoplay playsinline loop muted class="object-cover w-full h-full " ></video>
+        <div class="absolute inset-0 flex flex-col items-center justify-center" >
+            <h1 class="text-5xl md:text-8xl font-semibold" >Creative Jobs</h1>
+            <h2 class="text-sm md:text-xl font-light" >Browse and discover your next opportunity</h2>
+            <div class="text-sm mt-8 md:mt-4 focus-within:border-chartreuse dark:bg-zinc-900 dark:text-white border-1 border-stone-200 dark:border-transparent rounded-full w-[80%] md:w-md flex  items-center py-1 px-3 gap-3" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" lucide lucide-search-icon lucide-search"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+                <input type="text" placeholder="Search for jobs, freelancers, deliveries" class="focus:outline-none w-full" >
+            </div>
+        </div>
+    </div>
+    <div id="category_scroll" class="p-5 flex overflow-x-auto w-full whitespace-nowrap gap-2 sticky top-0 z-10 bg-white/20 dark:bg-black/20 backdrop-blur-xs shadow-2xl shadow-white dark:shadow-black" >
+        <a href="{% url "find_jobs" %}">
+            <button class="cursor-pointer  {% if not current_category %}bg-black text-chartreuse    {% else %} dark:border-zinc-700 dark:hover:bg-zinc-950  dark:text-white dark:bg-zinc-800 hover:bg-lime-100 bg-zinc-200 border border-zinc-400 hover:border-lime-600 hover:text-lime-600{% endif %}  rounded-md text-xs p-2 px-4" >
+                All
+            </button>
+        </a>
+        {% for category in categories %}
+            <a href="?category={{category.id}}">
+                <button class="cursor-pointer   {% if category.id == current_category %}bg-black text-chartreuse{% else %}hover:bg-lime-100 bg-zinc-200 dark:hover:bg-zinc-950 dark:bg-zinc-800 dark:text-white dark:border-zinc-700 border border-zinc-400  hover:border-lime-600 hover:text-lime-600{% endif %}  rounded-md text-xs p-2" >
+                    {{category}}
+                </button>
+            </a>
+        {% endfor %}
+    </div>
+    <div class="p-5 grid grid-rows-1  md:grid-cols-3  gap-4 mt-5" >
+        {% for job in jobs %}        
+            <div onClick="showGlobalLoading()" class="group hover:shadow-lg hover:shadow-zinc-300 transition-shadow relative bg-zinc-50 dark:text-white text-black dark:bg-black dark:border-zinc-800 grid grid-rows-2 rounded-lg h-50 border border-zinc-300 dark:hover:shadow-black p-2 cursor-pointer" >
+                <a href="?selected_job_id={{job.id}}" class="absolute inset-0"  >
+                </a>
+                <button onClick="openDropDown('{{job.id}}')" class="group-hover:opacity-100 opacity-0 transition-all absolute p-1 rounded-full  cursor-pointer hover:bg-lime-200 dark:hover:bg-zinc-900 dark:focus:bg-lime-800 focus:bg-lime-200 top-3 right-4" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                </button>
+                <div id="dropdown-{{job.id}}" class="bg-white dark:bg-zinc-900 p-0.5 hidden flex-col gap-1 shadow-md text-black dark:text-white shadow-zinc-300 dark:shadow-zinc-800 w-30 rounded-md absolute top-8 right-4" >
+                    <button class="w-full px-2 py-1 rounded-sm cursor-pointer hover:bg-zinc-100  text-xs flex" >
+                        Apply
+                    </button>
+                    <a href="{% url "update_job" job.pk %}">                        
+                        <button class="w-full px-2 py-1 rounded-sm cursor-pointer hover:bg-zinc-100  text-xs flex" >
+                            Copy link
+                        </button>
+                    </a>
+                    <a href="{% url "update_job" job.pk %}">                        
+                        <button class="w-full px-2 py-1 rounded-sm cursor-pointer hover:bg-zinc-100  text-xs flex" >
+                            Save
+                        </button>
+                    </a>
+                    <button class="w-full px-2 py-1 rounded-sm cursor-pointer text-red-500 hover:bg-zinc-100  text-xs flex" >
+                        Report
+                    </button>
+                </div>
+                <div class="flex items-center gap-4" >
+                    <div class="rounded-full overflow-hidden w-15  h-15" >
+                        {% if not job.client.profile_picture %}
+                            {% if job.client.gender == "male" %}
+                                <img src="/static/images/default_profile.png" alt="" class="object-cover w-full h-full" >
+                            {% elif job.client.gender == "female" %}
+                                <img src="/static/images/default_profile_pic.png" alt="" class="object-cover w-full h-full" >
+                            {% endif %}
+                        {% else %}
+                            <img src="{{job.client.profile_picture.url}}" alt="" class="object-cover w-full h-full" >
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col" >
+                        <span class="text-md font-medium" >{{job.client.username}}</span>
+                        <span class="text-xs dark:text-zinc-300 text-zinc-600 flex items-center " >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                            Los angelis
+                        </span>
+                    </div>
+                </div>
+                <div class="h-full flex flex-col justify-between" >
+                    <div >
+                        <span class="font-medium" >{{job.title}}</span>
+                        <p class="text-xs dark:text-zinc-300  text-zinc-600 leading-tight line-clamp-3" >{{job.short_description}}</p>
+                    </div>
+                    <div class="flex justify-between" >
+                        <p class="text-xs dark:text-zinc-300  text-zinc-600 leading-tight line-clamp-3 mt-2" >{{job.created_at|naturaltime}}</p>
+                        <span>Budget: ${{job.budget|intcomma}}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    let openDropdownId = null;
+    const find_job_scroll = document.getElementById("find_job_scroll");
+    const category_scroll = document.getElementById("category_scroll");
+
+    find_job_scroll.addEventListener('scroll', function () {
+        localStorage.setItem('find_job_scroll', find_job_scroll.scrollTop);
+    });
+
+    category_scroll.addEventListener('scroll', function () {
+        localStorage.setItem('category_scroll', category_scroll.scrollLeft);
+    });
+
+    window.addEventListener('load', function() {
+        const savedPosition = localStorage.getItem('find_job_scroll')
+        if (savedPosition !== null) {
+            find_job_scroll.scrollTop = parseInt(savedPosition)
+        }
+    })
+
+    window.addEventListener('load', function() {
+        const savedPosition = localStorage.getItem('category_scroll')
+        if (savedPosition !== null) {
+            category_scroll.scrollLeft = parseInt(savedPosition)
+        }
+    })
+
+    function openDropDown(dropdown_id) {
+        // Close any open dropdown first
+        if (openDropdownId && openDropdownId !== dropdown_id) {
+            closeDropDown(openDropdownId);
+        }
+        const dropdown = document.getElementById(`dropdown-${dropdown_id}`);
+        dropdown.classList.remove("hidden");
+        dropdown.classList.add("animate-dialog-drop");
+        dropdown.classList.add("flex");
+        openDropdownId = dropdown_id;
+    }
+
+    function closeDropDown(dropdown_id) {
+        const dropdown = document.getElementById(`dropdown-${dropdown_id}`);
+        if (dropdown) {
+            dropdown.classList.add("hidden");
+            dropdown.classList.remove("flex");
+        }
+        openDropdownId = null;
+    }
+
+    document.addEventListener('click', function(event) {
+        if (openDropdownId) {
+            const dropdown = document.getElementById(`dropdown-${openDropdownId}`);
+            const button = dropdown?.parentElement.querySelector('button[onClick^="openDropDown"]');
+            if (
+                dropdown &&
+                !dropdown.contains(event.target) &&
+                (!button || !button.contains(event.target))
+            ) {
+                closeDropDown(openDropdownId);
+            }
+        }
+    });
+</script>
+{% endblock  %}

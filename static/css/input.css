@@ -1,0 +1,186 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+@font-face {
+  font-family: "Audiowave";
+  src: url("/static/fonts/audiowide/Audiowide-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Exo2";
+  src: url("/static/fonts/exo2/Exo2-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+
+@keyframes gradientMove {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  
+}
+
+@keyframes push-in {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+}
+
+@keyframes dialog-drop {
+  0% {
+    transform: scale(0.2,0.2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1,1);
+    opacity: 1;
+  }
+}
+
+
+@layer components {
+  .scroll-bar {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(2, 206, 2) transparent;
+  }
+  .small-input {
+    @apply p-1.5 px-2 text-xs rounded-sm focus:outline-chartreuse outline-1 outline-zinc-400 focus:border-none;
+  }
+
+  .action-btn {
+    @apply bg-black dark:bg-white text-xs md:text-sm text-chartreuse dark:text-lime-600 cursor-pointer rounded-lg px-3 py-2  flex items-center gap-2;
+  }
+}
+
+
+@theme {
+  --font-open-sans: 'Open Sans', sans-serif;
+  --font-rubik: 'Rubik', sans-serif;
+  --font-exo2: "Exo2", sans-serif;
+  --font-quicksand: 'Quicksand', sans-serif;
+  --font-audiowave: "Audiowave", sans-serif;
+  --animate-swoop-in: swoopIn ease-out .5s both;
+  --animate-swoop-out: swoopOut ease-out .5s both;
+  --animate-fade-in: fadeIn ease-out .5s both;
+  --color-chartreuse: chartreuse;
+  --animate-gradient-border: gradientMove 6s ease infinite;
+  --color-gradient: linear-gradient(90deg, #ff7e5f, #feb47b);
+  --animate-pop-in: pop-in ease-out .5s both;
+  --animate-push-in: push-in ease-out .5s both;
+  --animate-dialog-drop: dialog-drop cubic-bezier(0.175, 0.885, 0.32, 1.275) .3s both;
+
+  @keyframes swoopIn {
+    0% {
+      opacity: 0;
+      transform: translateX(60px) scale(0.98);
+      /* filter: blur(6px); */
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      /* filter: blur(0); */
+    }
+    
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      filter: blur(6px);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0px);
+    }
+    
+  }
+
+
+  @keyframes swoopOut {
+    0% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      /* filter: blur(0); */
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(60px) scale(0.98);
+      /* filter: blur(6px); */
+    }
+    
+  }
+
+}

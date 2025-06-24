@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    $(document).on("scroll", function() {
+        let pageTop = $(document).scrollTop();
+        let pageBottom = pageTop + $(window).height();
+        let tags = $(".tag")
+
+        tags.each(function(i, tag) {
+            if ($(tag).position().top < pageBottom) {
+                if (!$(tag).hasClass("visible")) {
+                    $(tag).addClass("visible");
+                    // Add staggered animation delay
+                    $(tag).css("animation-delay", (i * 0.15) + "s");
+                }
+            } else {
+                $(tag).removeClass("visible");
+                $(tag).css("animation-delay", "0s");
+            }
+        });
+    });
+    // Trigger on page load
+    $(document).ready(function() {
+        $(document).trigger("scroll");
+    });
+</script>
+    {% include "web/partials/navbar.html" %}
+    <main class="w-[97.5%] h-screen rounded-3xl m-auto text-white " >
+
+        <div class="flex flex-col text-white mt-10 items-center justify-center " >
+            <span class="slideIn  group  relative overflow-hidden text-sm font-light  bg-gradient-to-r from-chartreuse via-green-500 to-transparent rounded-full cursor-pointer pl-8 p-1 flex gap-6 items-center duration-500 transition-all hover:-translate-y-1" style="animation-delay: 0.2s;" >
+                <span class="absolute inset-0.5  rounded-full transition-colors bg-black" >
+
+                </span>
+                <p class="z-1 dark:text-white " >
+                    Unlock your Creativity
+                </p>
+                <span class="p-3 rounded-full  z-1">
+                </span>
+            </span>
+            <h1 class="tag bg-gradient-to-r from-zinc-300 via-white to-zinc-300 slideIn relative text-center bg-clip-text text-transparent font-bold text-3xl md:text-6xl leading-snug md:leading-[4rem] mt-6 text-balance "
+                role="heading">
+                Streamline Freelance Jobs and Deliveries<br class="hidden md:block" />
+                on a Unified Platform
+            </h1>
+
+            <p class="tag slideIn text-center mt-4 font-light text-sm md:text-base leading-relaxed text-gray-300 px-4 md:px-24" style="animation-delay: 0.2s;">
+            Effortlessly connect with clients, manage freelance projects, and deliver high-quality work — all in one intuitive platform.<br class="hidden md:block" />
+            Boost your productivity and grow your business with <span class="font-medium text-white">ServeXpress</span>.
+            </p>
+
+            <div class="flex gap-4 mt-5 " >
+                <a href={% url "register" %}>
+                    <button class="slideIn group text-black  bg-chartreuse rounded-full cursor-pointer pl-8 p-1 flex gap-6 items-center transition-all ease-out " style="animation-delay: 0.3s;" >
+                        Get Started now
+                        <span class="  overflow-hidden  w-10 h-10 flex items-center justify-start group-hover:w-45 transition-all ease-out duration-300 whitespace-nowrap rounded-full  text-black bg-white shadow-lg shadow-[#1118]">
+                            <span class="ml-2.5  group-hover:hidden" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="sharp" stroke-linejoin="round" class="text-black lucide lucide-arrow-up-right-icon lucide-arrow-up-right"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                            </span>
+                            <p class="opacity-0  transition-opacity ease-in-out duration-700 group-hover:opacity-100 px-5" >
+                                Start by Signing Up
+                            </p>
+                        </span>
+                    </button>
+                </a>
+            </div>
+            <div class="flex mt-10  justify-between w-full" >
+                <div class=" flex gap-2 md:gap-4" >
+                    <div class="p-1 md:p-2 flex items-center justify-center flex-col w-30 md:w-40 h-25 md:h-35 rounded-lg bg-white/10 backdrop-blur-md" >
+                        <span class="text-3xl md:text-5xl font-medium" >8M+</span>
+                        <span class="text-xs md:text-sm" >Matches made</span>
+                    </div>
+                    <div class="p-1 md:p-2 flex  flex-col w-55 h-35 " >
+                        <span class="text-lg md:text-2xl" >Unlocking your potential</span>
+                        <span class="text-sm" >Here to help with our logistics</span>
+                        <a href="#" class="text-xs md:text-md flex items-center mt-4 underline text-lime-200 font-medium" >
+                            Browse All Categories 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right-icon lucide-arrow-up-right"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="bg-white dark:bg-gray-950 py-20 px-6 text-center mt-20">
+        <h2 class="text-3xl sm:text-4xl font-bold text-zinc-800 dark:text-white mb-10">Why Choose ServeXpress?</h2>
+        <div class="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+            <div class="card opacity-0 grid gap-4 bg-black dark:bg-gray-800 p-4 rounded-2xl hover:shadow-2xl transition-all duration-500  shadow-lime-500">
+                <div>
+                    <h3 class="text-xl fon1-semibold mb-3 text-lime-300">Freelance Marketplace</h3>
+                    <p class="text-gray-300 dark:text-gray-300">Post or find freelance jobs in design, tech, writing, and more.</p>
+                </div>
+            </div>
+            <div class="card opacity-0 grid gap-4 bg-black dark:bg-gray-800 p-4 rounded-2xl hover:shadow-2xl transition-all duration-500  shadow-lime-500">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-lime-300">Logistics System</h3>
+                    <p class="text-gray-300 dark:text-gray-300">Request fast deliveries with real-time status updates and driver tracking.</p>
+                </div>
+            </div>
+            <div class="card opacity-0 grid gap-4 bg-black dark:bg-gray-800 p-4 rounded-2xl hover:shadow-2xl transition-all duration-500  shadow-lime-500">
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-lime-300">Crypto + Escrow</h3>
+                    <p class="text-gray-300 dark:text-gray-300">Smart contract-powered escrow ensures safe payments and dispute resolution.</p>
+                </div>
+
+        </div>
+    </section>
+    <section class="px-6  bg-zinc-100  h-auto py-10" >
+        <h2 class="text-3xl sm:text-4xl font-bold text-black mb-10">How ServeXpress Works</h2>
+        <div class="flex gap-5 justify-center flex-wrap [perspective:1000px]" >
+            <div class="bg-white group cursor-pointer w-65 h-80 text-black hover:bg-lime-300 p-2 grid grid-rows-2 rounded-2xl transition-all duration-500  hover:[transform:rotateX(20deg)] "  >
+                <div class="flex justify-center row-span-3 h-full rounded-lg bg-white overflow-hidden border border-zinc-200">
+                    <lottie-player
+                        src="/static/lottie/hire.json"
+                        background="transparent"
+                        speed="1"
+                        class="w-40"
+                        loop
+                        autoplay
+                    ></lottie-player>
+                </div>
+                <div class="" >
+                    <h3 class="text-2xl font-bold " >Hire with Confidence</h3>
+                    <p>
+                        Find top freelancers for any job. Post tasks and pay safely through crypto-powered escrow.
+                    </p>
+                    <button class="group bg-chartreuse flex items-center group-hover:bg-black group-hover:text-chartreuse p-2 px-4 cursor-pointer rounded-lg mt-2 overflow-hidden transition-all" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0 duration-500 transition-all -translate-x-20 lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        <span class="-translate-x-3 group-hover:translate-x-5 duration-300 transition-all" >
+                            Learn more
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-10 duration-300 transition-all lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white group cursor-pointer w-65 h-80 text-black hover:bg-lime-300 p-2 grid grid-rows-2 rounded-2xl duration-500  hover:[transform:rotateX(20deg)] transition-all"  >
+                <div class="flex justify-center row-span-3 h-full rounded-lg bg-white overflow-hidden border border-zinc-200">
+                    <lottie-player
+                        src="/static/lottie/delivery.json"
+                        background="transparent"
+                        speed="1"
+                        class="w-40"
+                        loop
+                        autoplay
+                    ></lottie-player>
+                </div>
+                <div class="" >
+                    <h3 class="text-2xl font-bold " >Deliver with Speed</h3>
+                    <p>
+                        Request fast, reliable deliveries and track them live — all in one platform.
+                    </p>
+                    <button class="group bg-chartreuse flex items-center group-hover:bg-black group-hover:text-chartreuse p-2 px-4 cursor-pointer rounded-lg mt-2 overflow-hidden transition-all" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0 duration-500 transition-all -translate-x-20 lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        <span class="-translate-x-3 group-hover:translate-x-5 duration-300 transition-all" >
+                            Learn more
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-10 duration-300 transition-all lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="bg-white group cursor-pointer w-65 h-80 text-black hover:bg-lime-300 p-2 grid grid-rows-2 rounded-2xl transition-all duration-500  hover:[transform:rotateX(20deg)] "  >
+                <div class="flex justify-center row-span-3 h-full rounded-lg bg-white overflow-hidden border border-zinc-200">
+                    <lottie-player
+                        src="/static/lottie/earn.json"
+                        background="transparent"
+                        speed="1"
+                        class="w-40"
+                        loop
+                        autoplay
+                    ></lottie-player>
+                </div>
+                <div class="" >
+                    <h3 class="text-2xl font-bold " >Earn Securely</h3>
+                <p>
+                    Freelancers and drivers get paid instantly with no delays or hidden fees.
+                </p>
+                <button class="group bg-chartreuse flex items-center group-hover:bg-black group-hover:text-chartreuse p-2 px-4 cursor-pointer rounded-lg mt-2 overflow-hidden transition-all" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-0 duration-500 transition-all -translate-x-20 lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    <span class="-translate-x-3 group-hover:translate-x-5 duration-300 transition-all" >
+                        Learn more
+                    </span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-10 duration-300 transition-all lucide lucide-arrow-right-icon lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-black py-20 px-6 overflow-hidden">
+        <div class="section max-w-5xl mx-auto text-center opacity-0">
+            <h2 class="text-3xl font-bold mb-10 text-white ">How ServeXpress Works</h2>
+            <div class="grid sm:grid-cols-3 gap-8 text-left">
+            <div class="border-b md:border-r border-r-0 md:border-b-0 pb-6 border-lime-500" >
+                <h3 class="text-lg font-semibold text-chartreuse mb-2">1. Create an Account</h3>
+                <p class="text-zinc-300">Sign up and choose to offer freelance services or request deliveries.</p>
+            </div>
+            <div class="border-b md:border-r border-r-0 md:border-b-0 pb-6 border-lime-500" >
+                <h3 class="text-lg font-semibold text-chartreuse mb-2">2. Post Jobs or Deliveries</h3>
+                <p class="text-zinc-300">Easily create job listings or delivery requests from your dashboard.</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-chartreuse mb-2">3. Pay with Crypto Escrow</h3>
+                <p class="text-zinc-300">Funds are held securely until task or delivery is completed successfully.</p>
+            </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-20 text-center text-white">
+        <h2 class="card opacity-0 text-4xl font-bold mb-4">Join the Future of Freelance & Logistics</h2>
+        <p class="card opacity-0 mb-6">Sign up now and experience secure, fast, and smart transactions on ServeXpress.</p>
+        <a href="">        
+            <button class="card opacity-0 z-0 cursor-pointer  relative bg-chartreuse  overflow-hidden group text-black font-normal px-6 py-3 rounded-xl  transition">
+                <span class="absolute inset-0 w-0 group-hover:w-full  transition-all duration-300 ease-in-out bg-lime-300 to-transparent -z-1" >
+        
+                </span>
+                Create an account now!
+            </button>
+        </a>
+    </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".card");
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-pop-in");
+
+          // Optional: add delay based on index (staggered effect)
+          entry.target.style.animationDelay = `${i * 0.1}s`;
+
+          observer.unobserve(entry.target); // trigger only once
+        }
+      });
+    }, {
+      threshold: 0.1 // 10% visible triggers it
+    });
+
+    cards.forEach((card) => {
+      observer.observe(card);
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const sections = document.querySelectorAll(".section");
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-push-in");
+
+          // Optional: add delay based on index (staggered effect)
+          entry.target.style.animationDelay = `${i * 0.1}s`;
+
+          observer.unobserve(entry.target); // trigger only once
+        }
+      });
+    }, {
+      threshold: 0.1 // 10% visible triggers it
+    });
+
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
+  });
+</script>
+
+    {% include "web/partials/footer.html" %} 
+{% endblock  %}

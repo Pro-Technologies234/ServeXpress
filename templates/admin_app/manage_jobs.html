@@ -1,0 +1,113 @@
+{% extends "admin_app/base.html" %}
+{% load class_filter %}
+{% block content %}
+{% include "admin_app/partials/dialogs/create_job_category.html" %}
+<div class="p-5 h-full md:max-h-145  overflow-y-auto" >
+    <div class="flex justify-between" >
+        <h1 class="font-semibold text-2xl dark:text-white" >Manage all jobs</h1>
+        <div class="flex items-center gap-4" >
+            <button class="action-btn"  >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chart-bar-stacked-icon lucide-chart-bar-stacked"><path d="M11 13v4"/><path d="M15 5v4"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><rect x="7" y="13" width="9" height="4" rx="1"/><rect x="7" y="5" width="12" height="4" rx="1"/></svg>
+                <span class="hidden md:inline" >
+                    Create a Job Category
+                </span>
+            </button>
+            <button onclick="openPostJobDialog()" class="action-btn"  >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                <span class="hidden md:inline" >
+                    Create a new Job
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="grid grid-rows-1 md:grid-cols-3 gap-4 mt-5" >
+        {% for job in jobs %}        
+            <div class="relative  bg-zinc-50 dark:text-white text-black dark:bg-black dark:border-zinc-800 grid grid-rows-2 rounded-lg h-50 border border-zinc-300 p-2 cursor-pointer" >
+                <button onClick="openDropDown('{{job.id}}')" class="absolute p-1 rounded-full transition cursor-pointer hover:bg-lime-200 dark:hover:bg-lime-800 dark:focus:bg-lime-800 focus:bg-lime-200 top-3 right-4" >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                </button>
+                <div id="dropdown-{{job.id}}" class="bg-white dark:bg-zinc-900 p-0.5 hidden flex-col gap-1 shadow-md text-black dark:text-white shadow-zinc-300 dark:shadow-zinc-800 w-30 rounded-md absolute top-8 right-4" >
+                    <button class="w-full px-2 py-0.5 rounded-sm cursor-pointer hover:bg-zinc-100  text-sm flex" >
+                        View
+                    </button>
+                    <a href="{% url "update_job" job.pk %}">                        
+                        <button class="w-full px-2 py-0.5 rounded-sm cursor-pointer hover:bg-zinc-100  text-sm flex" >
+                            Edit
+                        </button>
+                    </a>
+                    <a href="{% url "delete_job" job.pk "manage_jobs" %}">
+                        <button class="w-full px-2 py-0.5 rounded-sm cursor-pointer text-red-500 hover:bg-zinc-100  text-sm flex" >
+                            Delete
+                        </button>
+                    </a>
+                </div>
+                <div class="flex items-center gap-4" >
+                    <div class="rounded-full overflow-hidden w-20  h-20" >
+                        {% if not job.client.profile_picture %}
+                            {% if job.client.gender == "male" %}
+                                <img src="/static/images/default_profile.png" alt="" class="object-cover w-full h-full" >
+                            {% elif job.client.gender == "female" %}
+                                <img src="/static/images/default_profile_pic.png" alt="" class="object-cover w-full h-full" >
+                            {% endif %}
+                        {% else %}
+                            <img src="{{job.client.profile_picture.url}}" alt="" class="object-cover w-full h-full" >
+                        {% endif %}
+                    </div>
+                    <div class="flex flex-col" >
+                        <span class="text-md font-medium" >{{job.client.username}}</span>
+                        <span class="text-sm dark:text-zinc-300 text-zinc-600 flex " >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin-icon lucide-map-pin"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+                            Los angelis
+                        </span>
+                    </div>
+                </div>
+                <div class="h-full" >
+                    <span class="font-medium" >{{job.title}}</span>
+                    <div >
+                        <p class="text-xs dark:text-zinc-300  text-zinc-600 leading-tight line-clamp-3" >{{job.short_description}}</p>
+                        <p class="text-xs dark:text-zinc-300  text-zinc-600 leading-tight line-clamp-3 mt-2" >{{job.created_at}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    let openDropdownId = null;
+
+    function openDropDown(dropdown_id) {
+        // Close any open dropdown first
+        if (openDropdownId && openDropdownId !== dropdown_id) {
+            closeDropDown(openDropdownId);
+        }
+        const dropdown = document.getElementById(`dropdown-${dropdown_id}`);
+        dropdown.classList.remove("hidden");
+        dropdown.classList.add("animate-dialog-drop");
+        dropdown.classList.add("flex");
+        openDropdownId = dropdown_id;
+    }
+
+    function closeDropDown(dropdown_id) {
+        const dropdown = document.getElementById(`dropdown-${dropdown_id}`);
+        if (dropdown) {
+            dropdown.classList.add("hidden");
+            dropdown.classList.remove("flex");
+        }
+        openDropdownId = null;
+    }
+
+    document.addEventListener('click', function(event) {
+        if (openDropdownId) {
+            const dropdown = document.getElementById(`dropdown-${openDropdownId}`);
+            const button = dropdown?.parentElement.querySelector('button[onClick^="openDropDown"]');
+            if (
+                dropdown &&
+                !dropdown.contains(event.target) &&
+                (!button || !button.contains(event.target))
+            ) {
+                closeDropDown(openDropdownId);
+            }
+        }
+    });
+</script>
+{% endblock %}

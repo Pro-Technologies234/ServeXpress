@@ -1,0 +1,64 @@
+<div id="sidebar-overlay" onClick="closeSidebar()" class="z-90 fixed -translate-x-200 md:hidden inline inset-0 bg-black/10 backdrop-blur-xs " >
+
+</div>
+<div id="side-bar" class="z-100  md:z-0 md:relative md:translate-x-0 -translate-x-100  w-70 md:w-full md:col-span-2 text-sm fixed left-0  transition-all duration-500 ease-out flex flex-col  gap-4  py-2 px-4 bg-zinc-50 dark:bg-zinc-950  border-r-1 border-zinc-300 dark:border-zinc-800 text-zinc-800  h-screen" >
+    <div class="flex items-center " > 
+        <img src="/static/icons/favicon.png" alt="" class="w-20" >
+        <span class="dark:text-white" >
+            ServeXpress
+        </span>
+    </div>
+    <div class="flex flex-col gap-4" >
+        <a href="{% url "admin_dashboard" %}">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name in "admin_dashboard" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "admin_dashboard" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-monitor-icon lucide-monitor"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+                Admin Dashboard
+            </button>
+        </a>
+        <a href="{% url "manage_users" %}">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "manage_users" or request.resolver_match.url_name in "create_user" or request.resolver_match.url_name in "edit_user" or request.resolver_match.url_name in "update_user"  %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white dark:bg-zinc-900-950 text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "manage_users" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-users-icon lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+                Manage Users
+            </button>
+        </a>
+        <a href="{% url "manage_jobs" %}">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "manage_jobs" or request.resolver_match.url_name in "create_jobs" or request.resolver_match.url_name in "edit_jobs"  %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white dark:bg-zinc-900-950 text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-briefcase-icon lucide-briefcase"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+                Manage Jobs
+            </button>
+        </a>
+        <a href="">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-scale-icon lucide-scale"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+                Escrow Disputes
+            </button>
+        </a>
+        <a href="">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-wallet-minimal-icon lucide-wallet-minimal"><path d="M17 14h.01"/><path d="M7 7h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14"/></svg>
+                Crypto Transactions
+            </button>
+        </a>
+        <a href="">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-chart-spline-icon lucide-chart-spline"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7"/></svg>
+                Platform Analytics
+            </button>
+        </a>
+        <a href="">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-bell-icon lucide-bell"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg>
+                Push Notifications
+            </button>
+        </a>
+        <a href="">
+            <button class="w-full flex items-center gap-2  px-5 py-2 rounded-lg {% if request.resolver_match.url_name == "" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}   cursor-pointer" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="{% if request.resolver_match.url_name == "" %} fill-lime-500 stroke-lime-500 dark:stroke-white dark:fill-white {% endif %} lucide lucide-monitor-cog-icon lucide-monitor-cog"><path d="M12 17v4"/><path d="m14.305 7.53.923-.382"/><path d="m15.228 4.852-.923-.383"/><path d="m16.852 3.228-.383-.924"/><path d="m16.852 8.772-.383.923"/><path d="m19.148 3.228.383-.924"/><path d="m19.53 9.696-.382-.924"/><path d="m20.772 4.852.924-.383"/><path d="m20.772 7.148.924.383"/><path d="M22 13v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"/><path d="M8 21h8"/><circle cx="18" cy="6" r="3"/></svg>
+                System Settings
+            </button>
+        </a>
+    </div>
+    <div>
+        
+    </div>
+</div>

@@ -1,0 +1,261 @@
+{% extends 'authentication/base.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+{% block content %}
+
+<div class="w-full h-screen grid grid-cols-3 overflow-hidden relative dark:text-white p-8 "   >
+    <div class="absolute -z-10 w-full h-full top-0 left-0"></div>
+    <div class="relative overflow-hidden bg-gradient-to-br text-white  rounded-l-2xl bg-black  p-5 h-full" >
+        <div id="card" class="flex gap-10 transition-transform" >
+            <div  class="grid grid-rows-5 shrink-0 w-full h-full  gap-4 justify-between" >
+                <div class="row-span-2" >
+                    <h2 class="text-3xl font-bold text-chartreuse" >
+                        Hire Top Talent, Anywhere in Minutes
+                    </h2>
+                    <p class="text-xs font-light mt-5" >
+                        ServeXpress connects you with vetted professionals for web development, design, writing, and more.
+                        Post your project, chat instantly, and pay securely through our integrated escrow system.
+                         No hassle, no delays — just results.
+                    </p>
+                </div>
+                <div class="bg-white h-70 grid grid-rows-3 row-span-3 gap-6 items-center rounded-2xl p-4">
+                  <lottie-player
+                    src="/static/lottie/man.json"
+                    background="transparent"
+                    speed="1"s
+                    class="w-80  m-auto row-span-2"
+                    loop
+                    autoplay>
+                  </lottie-player> 
+                  <p class="text-black text-lg font-bold leading-tight" >
+                    Browse, hire, and collaborate with skilled freelancers from around the world
+                  </p>
+                </div>
+            </div>
+            <div  class="grid grid-rows-5 shrink-0 w-full h-full  gap-4 justify-between" >
+                <div class="row-span-2" >
+                    
+                    <h2 class="text-3xl font-bold text-chartreuse" >
+                         Smart, Real-Time Deliveries You Can Trust
+                    </h2>
+                    <p class="text-xs font-light mt-5" >
+                        With our logistics system, you can request deliveries instantly, assign nearby agents, 
+                        and track every step live on the map. 
+                        Whether it’s documents, parcels, or food — ServeXpress ensures it gets there on time.
+                    </p>
+                </div>
+                <div class="bg-white h-70 grid grid-rows-3 row-span-3 gap-6 items-center rounded-2xl p-4">
+                  <lottie-player
+                    src="/static/lottie/bike.json"
+                    background="transparent"
+                    speed="1"s
+                    class="w-80  m-auto row-span-2"
+                    loop
+                    autoplay>
+                  </lottie-player> 
+                  <p class="text-black text-lg font-bold leading-tight" >
+                    Need to send or receive an item quickly and safely? We’ve got you covered.
+                  </p>
+                </div>
+            </div>
+            <div  class="grid grid-rows-5 shrink-0 w-full h-full  gap-4 justify-between" >
+                <div class="row-span-2" >             
+                    <h2 class="text-3xl font-bold text-chartreuse" >
+                        Secure Payments Backed by Crypto-Powered Escrow
+                    </h2>
+                    <p class="text-xs font-light mt-5" >
+                        Funds are securely held until the job is completed and approved by both parties. No scams. No delays. Just safe, transparent transactions that keep everyone protected.
+                    </p>
+                </div>
+                <div class="bg-white h-70 grid grid-rows-3 row-span-3 gap-6 items-center rounded-2xl p-4">
+                  <lottie-player
+                    src="/static/lottie/secure.json"
+                    background="transparent"
+                    speed="1"s
+                    class="w-80  m-auto row-span-2"
+                    loop
+                    autoplay>
+                  </lottie-player> 
+                  <p class="text-black text-lg font-bold leading-tight" >
+                    Say goodbye to payment worries with our automated, crypto-based escrow system.
+                  </p>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center absolute bottom-0 left-0 right-0 py-4 gap-5 justify-center" >
+            <button onClick="setCurrentSelector(0)" class="selector  cursor-pointer  p-1 rounded-full transition-all bg-white shadow-2xl " >
+            </button>
+            <button onClick="setCurrentSelector(1)" class="selector  cursor-pointer  p-1 rounded-full transition-all bg-white shadow-2xl " >
+            </button>
+            <button onClick="setCurrentSelector(2)" class="selector  cursor-pointer  p-1 rounded-full  transition-all bg-white shadow-2xl " >
+            </button>
+        </div>
+    </div>
+    <div class="col-span-2 p-5 px-15 overflow-hidden bg-white shadow-lg shadow-black/30  rounded-r-2xl  " >
+        {% comment %} <img src="{% static 'icons/favicon.svg' %}" alt="Site Logo" class="logo" /> {% endcomment %}
+        <h1 class="text-3xl font-bold" >Create an Account</h1>
+
+    <form method="post" novalidate class="w-full mt-8 h-110 relative " >
+        {% csrf_token %}
+
+        <div class="step-card animate-swoop-in hidden absolute top-0  w-full shrink-0" > 
+            <h2 class="text-2xl text-center font-semibold">
+                Enter your email, username, first and last name:
+            </h2>
+            <div class="flex gap-8 mt-5" >
+                <div class="mb-3 w-full flex flex-col gap-2 ">
+                    {{ form.email.label_tag }} 
+                    {{ form.email }}
+                    {% for error in form.email.errors %}
+                    <div class=" text-red-500 text-sm" >{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3 w-full flex flex-col gap-2">
+                    {{ form.username.label_tag }} 
+                    {{ form.username }}
+                    {% for error in form.username.errors %}
+                    <div class=" text-red-500 text-xs" >{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="flex gap-8 mt-5" >
+                <div class="mb-3 w-full flex flex-col gap-2 ">
+                    {{ form.first_name.label_tag }} 
+                    {{ form.first_name }}
+                    {% for error in form.email.errors %}
+                    <div class=" text-red-500 text-sm" >{{ error }}</div>
+                    {% endfor %}
+                </div>
+        
+                <div class="mb-3 w-full flex flex-col gap-2 ">
+                    {{ form.last_name.label_tag }} 
+                    {{ form.last_name }}
+                    {% for error in form.email.errors %}
+                    <div class=" text-red-500 text-sm" >{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="step-card animate-swoop-in hidden absolute top-0 gap-8 w-full shrink-0">
+            <div class="mb-3 w-full">
+                <h2 class="text-2xl text-center font-semibold" >
+                    Please select your gender:
+                </h2>
+
+                <div class="gender-options w-full flex place-content-center mt-5">
+                    {% for radio in form.gender %}
+                        <div class="gender-option flex gap-5 px-10">
+                            {{ radio.tag }}
+                            <label for="{{ radio.id_for_label }}" class="gender-label rounded-xl p-6 w-40">
+                                {% if radio.choice_label == "Male" %}
+                                    <p class="text-4xl" >👦</p>
+                                {% elif radio.choice_label == "Female" %}
+                                    <p class="text-4xl" >👧</p>
+                                {% endif %}
+                                <p>
+                                    {{ radio.choice_label }}
+                                </p>
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card animate-swoop-in hidden absolute top-0 gap-8 w-full shrink-0">
+            <h2 class="text-2xl text-center font-semibold">
+                Are you registering as a Freelancer or a Client?
+            </h2>
+
+            <div class="flex justify-center gap-12 mt-6">
+                <!-- Freelancer Option -->
+                <label class="cursor-pointer">
+                    <input type="radio"
+                        name="role"
+                        value="freelancer"
+                        id="id_role_0"
+                        class="hidden role-radio"
+                        checked
+                        {% if form.role.value == "freelancer" %}checked{% endif %}>
+                    <div class="role-card rounded-xl p-6 flex flex-col items-center transition-all">
+                        <span class="text-4xl mb-2">🧑‍💻</span>
+                        <span class="font-semibold">Freelancer</span>
+                    </div>
+                </label>
+
+                <!-- Client Option -->
+                <label class="cursor-pointer">
+                    <input type="radio"
+                        name="role"
+                        value="client"
+                        id="id_role_1"
+                        class="hidden role-radio"
+                        {% if form.role.value == "client" %}checked{% endif %}>
+                    <div class="role-card rounded-xl p-6 flex flex-col items-center transition-all">
+                        <span class="text-4xl mb-2">🧑‍💼</span>
+                        <span class="font-semibold">Client</span>
+                    </div>
+                </label>
+            </div>
+
+        </div>
+
+        <div class="step-card animate-swoop-in hidden absolute top-0 gap-8 w-full shrink-0" > 
+            <h2 class="text-2xl text-center font-semibold">
+                Set a strong password for your account:
+            </h2>
+            <div class="gender-options w-full flex gap-8 place-content-center mt-5">
+                <div class="mb-3 w-full flex flex-col gap-2 ">
+                    {{ form.password.label_tag }} 
+                    {{ form.password }}
+                    {% for error in form.email.errors %}
+                    <div class=" text-red-500 text-sm" >{{ error }}</div>
+                    {% endfor %}
+                </div>
+        
+                <div class="mb-3 w-full flex flex-col gap-2 ">
+                    {{ form.confirm_password.label_tag }} 
+                    {{ form.confirm_password }}
+                    {% for error in form.email.errors %}
+                    <div class=" text-red-500 text-sm" >{{ error }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+        <div class="absolute bottom-2 left-0 flex place-content-center right-0" >
+            <p>Already have an account ?  <a href={% url "log_in" %} class="text-red-500" >
+                Sign in
+            </a>
+        </p> 
+        </div>
+        <button id="back_btn" type="button" onClick="back_step()" class="bg-black  disabled:text-neutral-700 disabled:bg-gray-200 disabled:cursor-not-allowed  cursor-pointer pr-8 pl-4 py-2 rounded-lg text-white absolute bottom-0 left-0 flex gap-3" disabled>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left-icon lucide-chevron-left"><path d="m15 18-6-6 6-6"/></svg>
+            Back
+        </button>
+        <button id="next_btn" type="button" onClick="next_step()" class="bg-black cursor-pointer pl-8 pr-4 py-2 rounded-lg text-white absolute bottom-0 right-0 flex gap-3" >
+            Next
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right-icon lucide-chevron-right"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+
+        <button id="submit_btn" type="submit"  class=" bg-chartreuse hidden cursor-pointer px-8 py-2 rounded-lg text-black absolute bottom-0 right-0">
+            Register
+        </button>
+
+    </form>
+
+    </div>
+</div>
+
+<script>
+    const
+</script>
+
+<script src="/static/javascript/authentication.js" >
+
+</script>
+
+
+{% endblock %}

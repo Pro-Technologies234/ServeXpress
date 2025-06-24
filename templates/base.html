@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" class="scrollbar-hide" >
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ServeXpress</title>
+        <link rel="stylesheet" href="/static/css/output.css">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <link rel="icon" href="/static/icons/favicon.png">
+        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+</head>
+<body class="transition-colors text-white bg-black font-exo2 h-screen "  >
+    <div class="fixed inset-0 -z-1" >
+        <video 
+            src="{% static 'videos/Darkshell.mp4' %}" 
+            class="object-cover w-full h-full"
+            autoplay 
+            loop 
+            muted 
+            playsinline
+        ></video>
+    </div>
+    {% include "partials/message_dialog.html" %}
+    {% block content %}
+    
+    {% endblock  %}
+ <script defer>
+    // Smooth scroll lerping behavior
+    document.addEventListener("DOMContentLoaded", () => {
+      let currentScroll = window.scrollY;
+      let targetScroll = window.scrollY;
+      let isScrolling = false;
+
+      const lerp = (a, b, n) => (1 - n) * a + n * b;
+
+      const animate = () => {
+        currentScroll = lerp(currentScroll, targetScroll, 0.08); // Adjust 0.08 for speed
+        window.scrollTo(0, currentScroll);
+        if (Math.abs(currentScroll - targetScroll) > 0.5) {
+          requestAnimationFrame(animate);
+        } else {
+          isScrolling = false;
+        }
+      };
+
+      window.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        targetScroll += e.deltaY;
+        targetScroll = Math.max(0, Math.min(document.body.scrollHeight - window.innerHeight, targetScroll));
+        if (!isScrolling) {
+          isScrolling = true;
+          animate();
+        }
+      }, { passive: false });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<section>
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+    @keyframes scaleOut {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(0.9); opacity: 0; }
+    }
+    .animate-fade-in { animation: fadeIn 0.1s ease forwards; }
+    .animate-fade-out { animation: fadeOut 0.1s ease forwards; }
+    .animate-scale-in { animation: scaleIn 0.1s ease forwards; }
+    .animate-scale-out { animation: scaleOut 0.1s ease forwards; }
+  </style>
+
+  <div onclick="closeInfoDialog()" class="hidden InfoDialogOverlay bg-[#1113] w-full fixed h-lvh z-100"></div>
+  <div class="InfoDialog hidden">
+    <div class="InfoDialogContent w-[90%] md:w-[40%]  h-[50vh] z-100  p-5 shadow-gray-800 m-auto  gap-8 rounded-2xl shadow-2xl bg-white fixed top-0 left-0 right-0 bottom-0">
+        <button onclick="closeInfoDialog()" class="cursor-pointer group top-2 z-2 right-2 absolute p-1 rounded-full text-white bg-black ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+    <div class="flex flex-col gap-1 h-full justify-between pt-4 relative">
+        <div class="flex flex-col h-full">
+          <div>
+            <h1 class="text-xl font-medium">User Information</h1>
+            <p class="text-md text-neutral-800" id="">frellancer</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2" >
+          <div>
+            <span class="text-sm text-stone-800">First name:</span>
+            <p id="first-name" >Shaun</p>
+          </div>
+          <div>
+            <span class="text-sm text-stone-800">Last name:</span>
+            <p id="last-name" class="capitalize" >Stephen</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2" >
+          <div>
+            <span class="text-sm text-stone-800">Gender:</span>
+            <p id="gender" class="capitalize"  >Male</p>
+          </div>
+          <div>
+            <span class="text-sm text-stone-800">Role:</span>
+            <p id="role" class="capitalize" >Client</p>
+          </div>
+        </div>
+        <div class="" >
+          <div>
+            <span class="text-sm text-stone-800">Crypto Address:</span>
+            <p id="cryto-address" >0xA1B2C3D4E5F67890123456789ABCDEF123456789</p>
+          </div>
+        </div>
+        <div class="flex w-full text-sm justify-end gap-4">
+          <button onclick="closeInfoDialog()" class="bg-red-600 rounded-md cursor-pointer hover:bg-red-500 px-6 py-2 text-white transition-colors ease-out duration-300">
+            Cancel
+          </button>
+          <a id="editUserbtn" href="">
+            <button class="text-chartreuse bg-black rounded-md cursor-pointer   px-6 py-2 textblack transition-all ease-out duration-300">
+              Edit user
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+    const userInfoOverlay = document.querySelector(".InfoDialogOverlay");
+    const userInfoDialog = document.querySelector(".InfoDialog");
+    const userInfoContent = document.querySelector(".InfoDialogContent");
+    const firstName= document.getElementById("first-name");
+    const lastName= document.getElementById("last-name");
+    const gender= document.getElementById("gender");
+    const role= document.getElementById("role");
+    const cryptoAddress = document.getElementById("cryto-address");
+    const editUserBtn = document.getElementById("editUserbtn");
+
+  function closeInfoDialog() {
+    // Animate both separately
+    userInfoOverlay.classList.remove("animate-fade-in");
+    userInfoOverlay.classList.add("animate-fade-out");
+
+    userInfoContent.classList.remove("animate-scale-in");
+    userInfoContent.classList.add("animate-scale-out");
+
+    setTimeout(() => {
+      userInfoOverlay.style.display = "none";
+      userInfoOverlay.classList.remove("animate-fade-out");
+
+      userInfoDialog.style.display = "none";
+      userInfoContent.classList.remove("animate-scale-out");
+    }, 100);
+  }
+
+  function openInfoDialog(id,username, first_name, last_name, gender, role, cryto_address) {
+
+    // Show and animate both separately
+    userInfoOverlay.style.display = "block";
+    userInfoOverlay.classList.remove("animate-fade-out");
+    userInfoOverlay.classList.add("animate-fade-in");
+
+    firstName.textContent = first_name;
+    lastName.textContent = last_name;
+    gender.textContent = gender;
+    role.textContent = role;
+    cryptoAddress.textContent = cryto_address ? cryto_address : "no";
+    editUserBtn.href = `/manage_user/users/${id}/edit_user/`
+
+    // Optionally update the edit button href if needed
+    // editUserBtn.href = `/edit-user/${username}/`;
+
+
+    userInfoDialog.style.display = "block";
+    userInfoContent.classList.remove("animate-scale-out");
+    userInfoContent.classList.add("animate-scale-in");
+  }
+
+</script>

@@ -1,0 +1,94 @@
+{% extends "admin_app/base.html" %}
+
+{% block content %}
+<div class="w-full h-[90%] overflow-y-auto p-5" >
+    <div class="flex justify-between" >
+        <h1 class="font-semibold text-2xl text-white" >Manage all users</h1>
+        <a href="{% url "create_user" %}">
+            <button class="action-btn"  >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class=" lucide lucide-circle-plus-icon lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                <span class="hidden md:inline" >
+                    Create a new User
+                </span>
+            </button>
+        </a>
+    </div>
+    <div class="grid grid-rows-1 md:grid-cols-4 gap-4 mt-5" >
+        {% for user in users %}        
+            <div class="bg-stone-50 dark:text-white dark:bg-black dark:border-stone-800 dark:border hover:-translate-y-1 transition-all h-62 px-2 py-2 rounded-xl  hover:shadow-xl shadow shadow-stone-300 dark:shadow-black  flex flex-col justify-between" >
+                <div class="bg-white dark:bg-transparent dark:border-transparent p-2 rounded-md border border-stone-200  grid grid-cols-4 items-center gap-10" >
+                    <div class="rounded-full overflow-hidden w-15  h-15" >
+                        {% if not user.profile_picture %}
+                            {% if user.gender == "male" %}
+                                <img src="/static/images/default_profile.png" alt="" class="object-cover w-full h-full" >
+                            {% elif user.gender == "female" %}
+                                <img src="/static/images/default_profile_pic.png" alt="" class="object-cover w-full h-full" >
+                            {% endif %}
+                        {% else %}
+                            <img src="{{user.profile_picture.url}}" alt="" class="object-cover w-full h-full" >
+                        {% endif %}
+                    </div>
+                    <div class="col-span-3" >
+                        <h2 class="text-lg font-medium" >{{ user.username|truncatechars:15  }}</h2>
+                        <p class="text-sm text-stone-700 capitalize dark:text-zinc-300" >{{ user.role }}</p>
+                    </div>
+                </div>
+                <div class="grid bg-white dark:bg-transparent dark:border-transparent p-2 rounded-md border border-stone-200 grid-cols-2 gap-1" >
+                    <div class="text-sm flex flex-col " >
+                        <span class="text-xs text-stone-800 dark:text-stone-300" > First name:</span>
+                        <span  >
+                            {{user.first_name}}
+                        </span> 
+                    </div>
+                    <div class="text-sm flex flex-col" >
+                        <span class="text-xs text-stone-800 dark:text-stone-300" > Last name:</span>
+                        <span  >
+                            {{user.last_name}}
+                        </span> 
+                    </div>
+                </div>
+                <div class="grid bg-white dark:bg-transparent dark:border-transparent p-2 rounded-md border border-stone-200 grid-cols-2 gap-1" >
+                    <div class="text-sm flex flex-col" >
+                        <span class="text-xs text-stone-800 dark:text-stone-300" > Gender</span>
+                        <span class="capitalize" >
+                            {{user.gender}}
+                        </span> 
+                    </div>
+                    <div class="text-2xl flex flex-col" >
+                        {% if user.gender == "male" %}
+                            👦
+                        {% else %}
+                            👧
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex gap-2 justify-between" >
+                    <button onClick="openInfoDialog('{{user.id}}','{{user.username}}', 
+                        '{{user.first_name}}',
+                        '{{user.last_name}}',
+                        '{{user.gender}}',
+                        '{{user.role}}',
+                        '{{user.crypto_wallet_address}}')" class="p-1 dark:bg-black  px-1 items-center justify-between rounded-sm flex gap-2 text-blue-500 bg-white cursor-pointer transition-shadow text-sm hover:shadow-md dark:hover:shadow-none  dark:border-blue-500 shadow-blue-300" >
+                        <!-- View icon: blue background -->
+                         View
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-view-icon lucide-view"><path d="M21 17v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2"/><path d="M21 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><circle cx="12" cy="12" r="1"/><path d="M18.944 12.33a1 1 0 0 0 0-.66 7.5 7.5 0 0 0-13.888 0 1 1 0 0 0 0 .66 7.5 7.5 0 0 0 13.888 0"/></svg>
+                    </button>
+                    <a href="{% url "edit_user" user.id %}">
+                        <button class="p-1 dark:bg-black  px-1 items-center justify-between rounded-sm flex gap-2 text-yellow-500 bg-white cursor-pointer transition-shadow text-sm hover:shadow-md dark:hover:shadow-none  dark:border-yellow-500 shadow-yellow-300" >
+                            <!-- Edit icon: yellow background -->
+                             Edit
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-pen-icon lucide-user-pen"><path d="M11.5 15H7a4 4 0 0 0-4 4v2"/><path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/><circle cx="10" cy="7" r="4"/></svg>
+                        </button>
+                    </a>
+                    <button onClick="openDeleteDialog('{{user.id}}')" class="p-1 dark:bg-black  px-1 items-center justify-between rounded-sm flex gap-2 text-red-500 bg-white cursor-pointer transition-shadow text-sm hover:shadow-md dark:hover:shadow-none  dark:border-red-500 shadow-red-300" >
+                        Delete
+                        <!-- Delete icon: red background -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-x-icon lucide-user-round-x"><path d="M2 21a8 8 0 0 1 11.873-7"/><circle cx="10" cy="8" r="5"/><path d="m17 17 5 5"/><path d="m22 17-5 5"/></svg>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
