@@ -21,22 +21,10 @@
                 My Freelance Jobs
             </button>
         </a>
-        <a href="">
-            <button class="w-full flex items-center gap-2 {% if request.resolver_match.url_name in "my_deliveries" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}  pl-4 pr-2  py-2 rounded-lg text-lime-600 cursor-pointer" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-package-check-icon lucide-package-check"><path d="m16 16 2 2 4-4"/><path d="M21 10V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14"/><path d="m7.5 4.27 9 5.15"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></svg>
-                My Deliveries
-            </button>
-        </a>
         <a href="{% url "proposals" %}">
             <button class="w-full flex items-center gap-2 {% if request.resolver_match.url_name in "proposals" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}  pl-4 pr-2  py-2 rounded-lg text-lime-600 cursor-pointer" >
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-notebook-pen-icon lucide-notebook-pen"><path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/><path d="M2 6h4"/><path d="M2 10h4"/><path d="M2 14h4"/><path d="M2 18h4"/><path d="M21.378 5.626a1 1 0 1 0-3.004-3.004l-5.01 5.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z"/></svg>
                 Proposals 
-            </button>
-        </a>
-        <a href="">
-            <button class="w-full flex items-center gap-2 {% if request.resolver_match.url_name in "messages" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}  pl-4 pr-2  py-2 rounded-lg text-lime-600 cursor-pointer" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg>
-                Messages
             </button>
         </a>
         <a href="">
@@ -45,10 +33,10 @@
                 Ratings & Reviews
             </button>
         </a>
-        <a href="">
+        <a href="{% url "logout" %}">
             <button class="w-full flex items-center gap-2 {% if request.resolver_match.url_name in "payment" %} text-lime-600 bg-lime-100 dark:bg-lime-500 dark:text-white {% else %} hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white  text-zinc-600 dark:text-zinc-300 hover:text-black {% endif %}  pl-4 pr-2  py-2 rounded-lg text-lime-600 cursor-pointer" >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-dollar-sign-icon lucide-circle-dollar-sign"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-                Payments / Escrow
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+                Logout
             </button>
         </a>
     </div>

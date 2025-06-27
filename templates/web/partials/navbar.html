@@ -17,15 +17,23 @@
         </a>
     </nav>
     <div class="flex gap-4" >  
-        <a href= {% url "log_in" %} >
-            <button class="cursor-pointer bg-white  text-black  hover:-translate-y-1 transition-transform ease-out duration-500 px-4 p-1.5 rounded-full" >
-                Sign in
-            </button>
-        </a>
-        <a href={% url "register" %} class=" text-sm " >
-            <button class="group bg-chartreuse rounded-full cursor-pointer px-4 py-1.5 flex gap-1 text-black items-center hover:shadow-xl/50 shadow-chartreuse duration-500 transition-all hover:-translate-y-1 hover:rotate-1 ">
-                Create an Account
-            </button>
-        </a>
+        {% if not request.user.is_authenticated %}
+            <a href= {% url "log_in" %} >
+                <button class="cursor-pointer bg-white  text-black  hover:-translate-y-1 transition-transform ease-out duration-500 px-4 p-1.5 rounded-full" >
+                    Sign in
+                </button>
+            </a>
+            <a href={% url "register" %} class=" text-sm " >
+                <button class="group bg-chartreuse rounded-full cursor-pointer px-4 py-1.5 flex gap-1 text-black items-center hover:shadow-xl/50 shadow-chartreuse duration-500 transition-all hover:-translate-y-1 hover:rotate-1 ">
+                    Create an Account
+                </button>
+            </a>
+        {% else %}
+            <a href= {% url "find_jobs" %} >
+                <button class="cursor-pointer bg-white  text-black  hover:-translate-y-1 transition-transform ease-out duration-500 px-4 p-1.5 rounded-full" >
+                    Browse Jobs
+                </button>
+            </a>
+        {% endif %}
     </div>
 </header>

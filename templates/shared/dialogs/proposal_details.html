@@ -44,7 +44,7 @@
             </div>
         </div>
         <div>
-            <p class="text-sm text-zinc-800 font-medium" >{{current_proposal.message|linebreaksbr}}</p>
+            <p class="text-sm text-zinc-800 dark:text-zinc-200 font-medium" >{{current_proposal.message|linebreaksbr}}</p>
         </div>
         <div>
             <a href=" {% if current_proposal %}{% url "accept_proposal" current_proposal.id %}{% endif %}">

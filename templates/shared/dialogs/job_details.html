@@ -55,17 +55,17 @@
           <div>
             <p class="text-sm font-medium " >{{selected_job.description|linebreaksbr}}</p>
           </div>
-          <div class="bg-zinc-100 h-60 flex flex-col gap-5 rounded-lg border border-zinc-300 p-5" >
+          <div class="bg-zinc-100 dark:bg-zinc-900 h-60 flex flex-col gap-5 rounded-lg border border-zinc-300 dark:border-zinc-700 p-5" >
             <div class="grid grid-rows-2" >
-              <span class="text-sm text-zinc-800" >Job Type -</span>
+              <span class="text-sm text-zinc-800 dark:text-zinc-200 " >Job Type -</span>
               <span class="text-md font-semibold capitalize " >{{selected_job.job_type}}</span>
             </div>
             <div class="grid grid-rows-2" >
-              <span class="text-sm text-zinc-800" >Budget -</span>
+              <span class="text-sm text-zinc-800 dark:text-zinc-200 " >Budget -</span>
               <span class="text-md font-semibold " >${{selected_job.budget|intcomma}}</span>
             </div>
             <div class="grid grid-rows-2" >
-              <span class="text-sm text-zinc-800" >created at -</span>
+              <span class="text-sm text-zinc-800 dark:text-zinc-200 " >created at -</span>
               <span class="text-md font-semibold " >{{selected_job.created_at}}</span>
             </div>
           </div>

@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django_countries.fields import CountryField
+from django.utils.text import slugify
 
 User = settings.AUTH_USER_MODEL
 
@@ -30,6 +31,7 @@ class Job(models.Model):
         ("on-site","On-site"),
         ("hybrid","Hybrid"),
     ]
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
     client = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posted_jobs')
     categories = models.ManyToManyField(Category, related_name="jobs")
     title = models.CharField(max_length=255)
@@ -45,6 +47,17 @@ class Job(models.Model):
 
     def _str_(self):
         return f"{self.title} by {self.client.email}"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+            while Job.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
     
 class Proposal(models.Model):
     freelancer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='proposals')
